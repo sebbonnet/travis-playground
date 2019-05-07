@@ -1,1 +1,3 @@
-script "==== Hello this is building ==="
+language: bash
+
+script: echo "==== Hello this is building ==="
