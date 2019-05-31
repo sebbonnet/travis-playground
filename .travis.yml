@@ -5,6 +5,10 @@ before_install:
 
 install: echo "======= install ====="
 
+stages:
+  - test
+  - deploy
+
 jobs:
   include:
     - stage: test
@@ -16,15 +20,16 @@ jobs:
       name: job2
       script: echo "===== job2 ======"
 
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: echo "=====  deploy ===="
-    on:
-      tags: true
+    - stage: deploy
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: echo "=====  deploy ===="
+          on:
+            tags: true
 
 # tag version following semantic versioning - e.g. v0.70.0-alpha
-# regexp expression simplified for readability
+# regexp expression simplified for readability - see full regexp here: https://regexr.com/39s32
 branches:
   only:
     - master
