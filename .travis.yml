@@ -1,3 +1,28 @@
 language: bash
 
-script: echo "==== Hello this is building ==="
+before_install:
+  - echo "======= before install ====="
+
+install: echo "======= install ====="
+
+jobs:
+  include:
+    - stage: test
+      name: job1
+      before_script: echo "===== job1 before script ======"
+      script: echo "===== job1 ======"
+
+    - stage: test
+      name: job2
+      script: echo "===== job2 ======"
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: echo "=====  deploy ===="
+    on:
+      tags: true
+
+branches:
+  only:
+    - master
