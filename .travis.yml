@@ -9,6 +9,7 @@ stages:
   - name: test
     if: NOT (tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/)
   - name: deploy
+    if: branch = master OR tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/
 
 jobs:
   include:
@@ -27,7 +28,6 @@ jobs:
           skip_cleanup: true
           script: echo "=====  deploy ===="
           all_branches: true
-          condition: $TRAVIS_BRANCH =~ ^master || $TRAVIS_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+).*$
 
 # tag version following semantic versioning - e.g. v0.70.0-alpha
 # regexp expression simplified for readability - see full regexp here: https://regexr.com/39s32
