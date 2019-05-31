@@ -28,6 +28,7 @@ jobs:
           skip_cleanup: true
           script: echo "=====  deploy ===="
           all_branches: true
+          condition: true
 
 # tag version following semantic versioning - e.g. v0.70.0-alpha
 # regexp expression simplified for readability - see full regexp here: https://regexr.com/39s32
