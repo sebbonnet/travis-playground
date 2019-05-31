@@ -30,7 +30,7 @@ jobs:
           on:
             all_branches: true
 
-# tag version following semantic versioning - e.g. v0.70.0-alpha
+# tag version following semantic versioning - e.g. v0.70.0-alpha-1
 # regexp expression simplified for readability - see full regexp here: https://regexr.com/39s32
 branches:
   only:
