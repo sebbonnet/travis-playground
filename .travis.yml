@@ -8,8 +8,10 @@ install: echo "======= install ====="
 stages:
   - name: test
     if: NOT (tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/)
-  - name: deploy
-    if: type = push AND (branch = master OR tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/)
+  - name: deploy-release-candidate
+    if: type = push AND branch = master
+  - name: deploy-release
+    if: type = push AND tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/
 
 jobs:
   include:
@@ -22,11 +24,19 @@ jobs:
       name: job2
       script: echo "===== job2 ======"
 
-    - stage: deploy
+    - stage: deploy-release-candidate
       deploy:
         - provider: script
           skip_cleanup: true
-          script: echo "=====  deploy ===="
+          script: echo "=====  deploy release-candidate ===="
+          on:
+            all_branches: true
+
+    - stage: deploy-release
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: echo "=====  deploy release ===="
           on:
             all_branches: true
 
