@@ -12,7 +12,7 @@ before_install:
   - echo "======= before install ====="
 
 # skip install which defaults to running `make` for go languages
-install: true
+script: true
 
 stages:
   - name: test
