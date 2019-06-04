@@ -3,13 +3,13 @@ language: bash
 before_install:
   - echo "======= before install ====="
 
-install: echo "======= install ====="
-
 stages:
   - name: test
     if: NOT (tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/)
-  - name: deploy
-    if: branch = master OR tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/
+  - name: deploy-release-candidate
+    if: type = push AND branch = master
+  - name: deploy-release
+    if: type = push AND tag =~ /^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/
 
 jobs:
   include:
@@ -18,20 +18,24 @@ jobs:
       before_script: echo "===== job1 before script ======"
       script: echo "===== job1 ======"
 
-    - stage: test
-      name: job2
-      script: echo "===== job2 ======"
-
-    - stage: deploy
+    - stage: deploy-release-candidate
       deploy:
         - provider: script
           skip_cleanup: true
-          script: echo "=====  deploy ===="
+          script: make setup install release
           on:
+            # assumes this stage is only included on the correct branch or tag
             all_branches: true
 
-# tag version following semantic versioning - e.g. v0.70.0-alpha
-# regexp expression simplified for readability - see full regexp here: https://regexr.com/39s32
+    - stage: deploy-release
+      deploy:
+        - provider: script
+          skip_cleanup: true
+          script: make release
+          on:
+            # assumes this stage is only included on the correct branch or tag
+            all_branches: true
+
 branches:
   only:
     - master
