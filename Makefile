@@ -2,7 +2,8 @@
 .DEFAULT_GOAL := all
 .PHONY: all check-style clean-all build-all setup setup-all check-style-all run-local-registry
 
-all: install dind check
+all:
+	@echo "== all"
 
 setup: check-system-dependencies setup-all run-local-registry
 
