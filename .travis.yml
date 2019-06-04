@@ -1,4 +1,12 @@
-language: bash
+language: go
+
+sudo: required
+
+go:
+  - 1.12
+
+services:
+  - docker
 
 before_install:
   - echo "======= before install ====="
@@ -15,8 +23,8 @@ jobs:
   include:
     - stage: test
       name: job1
-      before_script: echo "===== job1 before script ======"
-      script: echo "===== job1 ======"
+      before_script: make setup install dind
+      script: make check
 
     - stage: deploy-release-candidate
       deploy:
