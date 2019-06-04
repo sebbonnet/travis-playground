@@ -11,7 +11,7 @@ services:
 before_install:
   - echo "======= before install ====="
 
-# skip install which defaults to running `make` for go languages
+# skip script phase which defaults to running `make` for go languages
 script: true
 
 stages:
